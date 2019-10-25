@@ -8,19 +8,26 @@ public class RockController : MonoBehaviour
     public float hunger = 100f;
     public float friendship = 100f;
     public bool isSick = false;
-
+    public bool isDead = false;
     public float hungerScale = 2f;
     public GameObject brokenRocks;
+
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("escape"))
+        {
+            Application.Quit();
+        }
+
         StatusUpdate();
         CheckHealth();
     }
@@ -54,15 +61,20 @@ public class RockController : MonoBehaviour
 
     void CheckHealth()
     {
-        if (hunger <= 0)
+        if (!isDead)
         {
-            Destroy(gameObject);
-            brokenRocks.SetActive(true);
-            
-        }
-        if (friendship <= 0)
-        {
-            Destroy(gameObject);
+            if (hunger <= 0)
+            {
+                isDead = true;
+                Destroy(gameObject);
+                brokenRocks.SetActive(true);
+
+            }
+            if (friendship <= 0)
+            {
+                isDead = true;
+                rb.AddForce(new Vector3(0f, 100f, 50f));
+            }
         }
     }
 }

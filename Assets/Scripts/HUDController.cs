@@ -46,19 +46,25 @@ public class HUDController : MonoBehaviour
 
     public void FeedRock()
     {
-        if (rock.GetComponent<RockController>().hunger <= 95)
+        if (rock.GetComponent<RockController>().hunger <= 95 && !rock.GetComponent<RockController>().isDead)
             rock.GetComponent<RockController>().hunger += 5;
     }
 
     public void PlayWithRock()
     {
-        if (rock.GetComponent<RockController>().friendship <= 95)
+        if (rock.GetComponent<RockController>().friendship <= 95 && !rock.GetComponent<RockController>().isDead)
             rock.GetComponent<RockController>().friendship += 5;
     }
 
     public void GoToVet()
     {
-        if(rock.GetComponent<RockController>().isSick)
+        if(rock.GetComponent<RockController>().isSick && !rock.GetComponent<RockController>().isDead)
             rock.GetComponent<RockController>().isSick = false;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.LogError("Game Quit");
     }
 }
